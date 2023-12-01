@@ -14,9 +14,42 @@ class Day1 extends Day {
             .filter((entry) => entry !== '');
     }
 
+    lettersToDigits(input: string): string {
+        const spelledDigits = {
+            one: 1,
+            two: 2,
+            three: 3,
+            four: 4,
+            five: 5,
+            six: 6,
+            seven: 7,
+            eight: 8,
+            nine: 9,
+        };
+
+        Object.keys(spelledDigits).forEach((key) => {
+            [...input.matchAll(new RegExp(key, 'gi'))].map((match) => {
+                const output = [];
+
+                if (match.index !== undefined) {
+                    if (match.index > 0) {
+                        output.push(input.slice(0, match.index + 1));
+                    }
+
+                    input = [
+                        ...output,
+                        spelledDigits[key as keyof typeof spelledDigits],
+                        input.slice(match.index + 1),
+                    ].join('');
+                }
+            });
+        });
+
+        return input.replace(/\D/g, '');
+    }
+
     getDigits(input: string): number {
-        const regex = /\d/g;
-        const matches = [...input.matchAll(regex)];
+        const matches = [...input.matchAll(/\d/g)];
         const digits: Array<string> = [];
 
         matches.map((match, index) => {
@@ -44,7 +77,15 @@ class Day1 extends Day {
     }
 
     solveForPartTwo(input: string): string {
-        return input;
+        const entries = this.getEntries(input);
+        let result = 0;
+
+        entries.map((entry) => {
+            const entryToDigits = this.lettersToDigits(entry);
+            result += this.getDigits(entryToDigits);
+        });
+
+        return result.toString();
     }
 }
 
