@@ -138,18 +138,30 @@ class Day5 extends Day {
     }
 
     solveForPartTwo(input: string): string {
-        const results: Array<number> = [];
+        let result: number = Infinity;
         const seedRanges = this.getSeedRanges(input);
         const maps = this.getAllMaps(input);
+        let index = 0;
 
-        seedRanges.forEach(({ min, max }) => {
-            let seed = min;
+        for (index; index < seedRanges.length; index++) {
+            const range = seedRanges[index];
+            const max = range.max;
+            let seed = range.min;
+
             for (seed; seed <= max; seed++) {
-                results.push(this.getLocation(seed, maps));
-            }
-        });
+                console.log(
+                    `Range ${index} of ${seedRanges.length}`,
+                    `seed ${seed} to ${max}`
+                );
+                const location = this.getLocation(seed, maps);
 
-        return Math.min(...results).toString();
+                if (location < result) {
+                    result = location;
+                }
+            }
+        }
+
+        return result.toString();
     }
 }
 
