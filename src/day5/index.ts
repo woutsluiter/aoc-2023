@@ -64,6 +64,9 @@ class Day5 extends Day {
                     max: rowArray[1] + rowArray[2] - 1,
                     offset,
                 };
+            })
+            .sort((row, previousRow) => {
+                return row.min - previousRow.min;
             });
 
         return mappedArray;
@@ -88,13 +91,13 @@ class Day5 extends Day {
         unmappedInput: number,
         maps: Array<CategoryMapType>
     ): number {
-        const map = maps.find((map) =>
-            this.isInRange(unmappedInput, map.min, map.max)
-        );
+        for (const map of maps) {
+            if (this.isInRange(unmappedInput, map.min, map.max)) {
+                return unmappedInput + map.offset;
+            }
+        }
 
-        if (!map) return unmappedInput;
-
-        return unmappedInput + map.offset;
+        return unmappedInput;
     }
 
     isInRange(input: number, min: number, max: number) {
@@ -148,11 +151,11 @@ class Day5 extends Day {
             const max = range.max;
             let seed = range.min;
 
+            console.log(
+                `Processing range ${index + 1} of ${seedRanges.length}`
+            );
+
             for (seed; seed <= max; seed++) {
-                console.log(
-                    `Range ${index} of ${seedRanges.length}`,
-                    `seed ${seed} to ${max}`
-                );
                 const location = this.getLocation(seed, maps);
 
                 if (location < result) {

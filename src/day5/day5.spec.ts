@@ -37,14 +37,14 @@ humidity-to-location map:
 `;
 
 const mockSeedToSoilMap = [
-    { min: 98, max: 99, offset: -48 },
     { min: 50, max: 97, offset: 2 },
+    { min: 98, max: 99, offset: -48 },
 ];
 
 const mockSoilToFertilizerMap = [
+    { min: 0, max: 14, offset: 39 },
     { min: 15, max: 51, offset: -15 },
     { min: 52, max: 53, offset: -15 },
-    { min: 0, max: 14, offset: 39 },
 ];
 
 const mockOutputPartOne = '35';
