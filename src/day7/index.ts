@@ -1,14 +1,5 @@
 import { Day } from '../day';
 
-// type HandType =
-//     | 'fiveOfAKind'
-//     | 'fourOfAKind'
-//     | 'fullHouse'
-//     | 'threeOfAKind'
-//     | 'twoPair'
-//     | 'onePair'
-//     | 'highCard';
-
 export type HandType = {
     bet: number;
     cards: string;
